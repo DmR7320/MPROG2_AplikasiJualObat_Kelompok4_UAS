@@ -1,13 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:medcurekelompok4uas/menu1.dart';
-import 'package:medcurekelompok4uas/menu.dart';
-import 'package:medcurekelompok4uas/menutips.dart';
-import 'package:medcurekelompok4uas/ubah.dart';
 import 'package:medcurekelompok4uas/utama.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class DeskripsiApp extends StatelessWidget {
   const DeskripsiApp({Key? key}) : super(key: key);
@@ -17,10 +11,10 @@ class DeskripsiApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            appBarTheme: AppBarTheme(
-          color: const Color(0xFFFFFFFF),
+            appBarTheme: const AppBarTheme(
+          color: Color(0xFFFFFFFF),
         )),
-        home: DeskripsiApp1(
+        home: const DeskripsiApp1(
           strBarang: '',
         ));
   }
@@ -31,6 +25,7 @@ class DeskripsiApp1 extends StatefulWidget {
   final String strBarang;
 
   @override
+  // ignore: no_logic_in_create_state
   State<DeskripsiApp1> createState() => DeskripsiApp2(strBarang);
 }
 
@@ -42,32 +37,35 @@ class DeskripsiApp2 extends State<DeskripsiApp1> {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => UtamaApp()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const UtamaApp()));
           return Future.value(true);
         },
         child: Scaffold(
             appBar: AppBar(
                 toolbarHeight: 100,
                 leading: Container(
-                    padding: EdgeInsets.only(left: 20),
+                    padding: const EdgeInsets.only(left: 20),
                     child: CircleAvatar(
                         backgroundColor: Colors.green,
                         child: IconButton(
-                          padding: EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(5),
                           color: Colors.white,
                           onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => UtamaApp()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const UtamaApp()));
                           },
-                          icon: Icon(Icons.arrow_back),
+                          icon: const Icon(Icons.arrow_back),
                         ))),
                 title: Container(
-                    padding: EdgeInsets.only(left: 45),
+                    padding: const EdgeInsets.only(left: 45),
                     height: 75,
                     child: Image.asset("assets/medcurebanner.png"))),
             body: SingleChildScrollView(
                 child: Column(children: [
+              // ignore: avoid_unnecessary_containers
               Container(
                   child: StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
@@ -77,10 +75,11 @@ class DeskripsiApp2 extends State<DeskripsiApp1> {
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (!snapshot.hasData) {
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: CircularProgressIndicator());
                         }
                         return ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             itemCount: snapshot.data!.docs.length,
@@ -88,24 +87,24 @@ class DeskripsiApp2 extends State<DeskripsiApp1> {
                               return Column(children: [
                                 Container(
                                     height: 400,
-                                    padding:
-                                        EdgeInsets.only(left: 10, right: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
                                     child: Image.network(
                                       snapshot.data!.docs[index].get('gambar'),
                                     )),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
                                   alignment: Alignment.center,
                                   child: Text(
                                     snapshot.data!.docs[index].get('nama'),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 40,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
@@ -113,117 +112,117 @@ class DeskripsiApp2 extends State<DeskripsiApp1> {
                                   child: Text("Nama : " +
                                       snapshot.data!.docs[index].get('nama')),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
                                   alignment: Alignment.center,
-                                  child: Text("Deskripsi : ",
+                                  child: const Text("Deskripsi : ",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20)),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
                                     snapshot.data!.docs[index].get('deskripsi'),
-                                    style: TextStyle(fontSize: 15),
+                                    style: const TextStyle(fontSize: 15),
                                   ),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
                                   alignment: Alignment.center,
-                                  child: Text("Komposisi : ",
+                                  child: const Text("Komposisi : ",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20)),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
                                     snapshot.data!.docs[index].get('komposisi'),
-                                    style: TextStyle(fontSize: 15),
+                                    style: const TextStyle(fontSize: 15),
                                   ),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
                                   alignment: Alignment.center,
-                                  child: Text("Manfaat : ",
+                                  child: const Text("Manfaat : ",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20)),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
                                     snapshot.data!.docs[index].get('manfaat'),
-                                    style: TextStyle(fontSize: 15),
+                                    style: const TextStyle(fontSize: 15),
                                   ),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
                                   alignment: Alignment.center,
-                                  child: Text("Dosis : ",
+                                  child: const Text("Dosis : ",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20)),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
                                     snapshot.data!.docs[index].get('dosis'),
-                                    style: TextStyle(fontSize: 15),
+                                    style: const TextStyle(fontSize: 15),
                                   ),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
                                   alignment: Alignment.center,
-                                  child: Text("Efek Samping : ",
+                                  child: const Text("Efek Samping : ",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20)),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
@@ -231,82 +230,82 @@ class DeskripsiApp2 extends State<DeskripsiApp1> {
                                   child: Text(
                                     snapshot.data!.docs[index]
                                         .get('efeksamping'),
-                                    style: TextStyle(fontSize: 15),
+                                    style: const TextStyle(fontSize: 15),
                                   ),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
                                   alignment: Alignment.center,
-                                  child: Text("Penyajian : ",
+                                  child: const Text("Penyajian : ",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20)),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
                                     snapshot.data!.docs[index].get('penyajian'),
-                                    style: TextStyle(fontSize: 15),
+                                    style: const TextStyle(fontSize: 15),
                                   ),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
                                   alignment: Alignment.center,
-                                  child: Text("Perhatian : ",
+                                  child: const Text("Perhatian : ",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20)),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
                                     snapshot.data!.docs[index].get('perhatian'),
-                                    style: TextStyle(fontSize: 15),
+                                    style: const TextStyle(fontSize: 15),
                                   ),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
                                   alignment: Alignment.center,
-                                  child: Text("Pabrik : ",
+                                  child: const Text("Pabrik : ",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20)),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20,
                                     right: 20,
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
                                     snapshot.data!.docs[index].get('pabrik'),
-                                    style: TextStyle(fontSize: 15),
+                                    style: const TextStyle(fontSize: 15),
                                   ),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                               ]);
                             });
                       }))

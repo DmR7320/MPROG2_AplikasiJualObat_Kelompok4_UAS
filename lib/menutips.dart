@@ -1,8 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:medcurekelompok4uas/menu.dart';
 import 'package:medcurekelompok4uas/utama.dart';
 
@@ -14,10 +11,10 @@ class MenuTips extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            appBarTheme: AppBarTheme(
-          color: const Color(0xFFFFFFFF),
+            appBarTheme: const AppBarTheme(
+          color: Color(0xFFFFFFFF),
         )),
-        home: MenuTips1());
+        home: const MenuTips1());
   }
 }
 
@@ -29,10 +26,10 @@ class MenuTips1 extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            appBarTheme: AppBarTheme(
-          color: const Color(0xFFFFFFFF),
+            appBarTheme: const AppBarTheme(
+          color: Color(0xFFFFFFFF),
         )),
-        home: MenuTips2(
+        home: const MenuTips2(
           title: '',
         ));
   }
@@ -52,15 +49,16 @@ class MenuTips3 extends State<MenuTips2> {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => MenuApp()));
+          Navigator.pop(context);
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const MenuApp()));
           return Future.value(true);
         },
         child: Scaffold(
           body: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 ExpansionTile(
@@ -68,14 +66,14 @@ class MenuTips3 extends State<MenuTips2> {
                     "Bagaimana cara menambahkan data obat?",
                     style: TextStyle(color: Colors.green[900]),
                   ),
-                  children: <Widget>[
+                  children: const <Widget>[
                     ListTile(
                       title: Text(
                           "Di menu 'Barang' klik tombol ➕, lalu akan muncul menu yang bisa diisi."),
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 ExpansionTile(
@@ -83,7 +81,7 @@ class MenuTips3 extends State<MenuTips2> {
                     "Apa fungsi aplikasi ini?",
                     style: TextStyle(color: Colors.green[900]),
                   ),
-                  children: <Widget>[
+                  children: const <Widget>[
                     ListTile(
                       title: Text(
                           "Membuat database list obat yang bisa diubah sesuai keinginan"),
@@ -96,26 +94,30 @@ class MenuTips3 extends State<MenuTips2> {
           appBar: AppBar(
               toolbarHeight: 100,
               leading: Container(
-                  padding: EdgeInsets.only(left: 20),
+                  padding: const EdgeInsets.only(left: 20),
                   child: CircleAvatar(
                       backgroundColor: Colors.green,
                       child: IconButton(
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         color: Colors.white,
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => MenuApp()));
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const MenuApp()));
                         },
-                        icon: Icon(Icons.arrow_back),
+                        icon: const Icon(Icons.arrow_back),
                       ))),
               title: Container(
-                  padding: EdgeInsets.only(left: 45),
+                  padding: const EdgeInsets.only(left: 45),
                   height: 75,
                   child: Image.asset("assets/medcurebanner.png"))),
           bottomNavigationBar: BottomNavigationBar(
             onTap: (value) {
+              Navigator.pop(context);
               Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => UtamaApp()));
+                  context, MaterialPageRoute(builder: (_) => const UtamaApp()));
             },
             backgroundColor: Colors.green,
             selectedItemColor: Colors.white,

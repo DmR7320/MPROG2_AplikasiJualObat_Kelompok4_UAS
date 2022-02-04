@@ -1,16 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:medcurekelompok4uas/menu1.dart';
 import 'package:medcurekelompok4uas/utama.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:path_provider/path_provider.dart';
 
 class UbahApp extends StatelessWidget {
   const UbahApp({Key? key}) : super(key: key);
@@ -20,10 +14,10 @@ class UbahApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            appBarTheme: AppBarTheme(
-          color: const Color(0xFFFFFFFF),
+            appBarTheme: const AppBarTheme(
+          color: Color(0xFFFFFFFF),
         )),
-        home: UbahApp1());
+        home: const UbahApp1());
   }
 }
 
@@ -35,10 +29,10 @@ class UbahApp1 extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            appBarTheme: AppBarTheme(
-          color: const Color(0xFFFFFFFF),
+            appBarTheme: const AppBarTheme(
+          color: Color(0xFFFFFFFF),
         )),
-        home: UbahApp2(
+        home: const UbahApp2(
           title: '',
         ));
   }
@@ -67,15 +61,34 @@ class UbahApp3 extends State<UbahApp2> {
       FirebaseFirestore.instance.collection('barang');
   String imgFileasset = ("assets/logogaleri.png");
   File? imgFile;
+  // ignore: prefer_typing_uninitialized_variables
   var lokal;
+  // ignore: prefer_typing_uninitialized_variables
   var link;
   String template =
       ("https://firebasestorage.googleapis.com/v0/b/medcurekelompok4uas.appspot.com/o/logogaleri.png?alt=media&token=e2905a8b-41ad-461d-9ad2-35fd8d49fb8f");
 
+  // ignore: non_constant_identifier_names
+  String Value = "Nama belum ada";
+
   showAlertDialog1(BuildContext context) {
-    AlertDialog alert = AlertDialog(
+    AlertDialog alert = const AlertDialog(
       title: Text("Maaf"),
       content: Text("Semua harus diisi."),
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAlertDialog2(BuildContext context) {
+    AlertDialog alert = const AlertDialog(
+      title: Text("Maaf"),
+      content: Text("Nama sudah ada."),
     );
 
     showDialog(
@@ -91,12 +104,14 @@ class UbahApp3 extends State<UbahApp2> {
     return WillPopScope(
         onWillPop: () {
           if (link == null) {
+            Navigator.pop(context);
             Navigator.push(
-                context, MaterialPageRoute(builder: (_) => UtamaApp()));
+                context, MaterialPageRoute(builder: (_) => const UtamaApp()));
           } else {
+            Navigator.pop(context);
             FirebaseStorage.instance.refFromURL(link).delete();
             Navigator.push(
-                context, MaterialPageRoute(builder: (_) => UtamaApp()));
+                context, MaterialPageRoute(builder: (_) => const UtamaApp()));
           }
           return Future.value(true);
         },
@@ -106,29 +121,35 @@ class UbahApp3 extends State<UbahApp2> {
                 child: Column(children: [
               Container(
                   alignment: Alignment.topLeft,
-                  padding: EdgeInsets.only(top: 40, left: 20),
+                  padding: const EdgeInsets.only(top: 40, left: 20),
                   child: CircleAvatar(
                       radius: 30,
                       backgroundColor: Colors.white,
                       child: IconButton(
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         color: Colors.green,
                         onPressed: () {
                           if (link == null) {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => UtamaApp()));
+                            Navigator.pop(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const UtamaApp()));
                           } else {
                             FirebaseStorage.instance.refFromURL(link).delete();
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => UtamaApp()));
+                            Navigator.pop(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const UtamaApp()));
                           }
                         },
-                        icon: Icon(Icons.arrow_back),
+                        icon: const Icon(Icons.arrow_back),
                       ))),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(top: 20, bottom: 20),
-                child: Text("Foto / Gambar",
+                padding: const EdgeInsets.only(top: 20, bottom: 20),
+                child: const Text("Foto / Gambar",
                     style: TextStyle(color: Colors.white)),
               ),
               Container(
@@ -136,12 +157,13 @@ class UbahApp3 extends State<UbahApp2> {
                   height: 200,
                   width: 200,
                   alignment: Alignment.center,
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     left: 40,
                     right: 40,
                     top: 20,
                   ),
                   child: GestureDetector(
+                    // ignore: avoid_unnecessary_containers
                     child: Container(
                         child: Image.network(
                       template,
@@ -154,7 +176,6 @@ class UbahApp3 extends State<UbahApp2> {
                         if (imgPicker != null) {
                           imgFile = File(imgPicker.path);
                           lokal = imgPicker.path;
-                          print(lokal);
                         }
                       });
                       if (imgPicker != null) {
@@ -174,130 +195,158 @@ class UbahApp3 extends State<UbahApp2> {
                   )),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(top: 20),
-                child: Text("Nama Obat", style: TextStyle(color: Colors.white)),
+                padding: const EdgeInsets.only(top: 20),
+                child: const Text("Nama Obat",
+                    style: TextStyle(color: Colors.white)),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(left: 40, right: 40),
+                padding: const EdgeInsets.only(left: 40, right: 40),
                 child: TextField(
+                  onChanged: (value) async {
+                    String namaobat = namaController.text;
+                    final QuerySnapshot result = await FirebaseFirestore
+                        .instance
+                        .collection('barang')
+                        .where('nama', isEqualTo: namaobat)
+                        .get();
+                    // ignore: prefer_is_empty
+                    if (result.docs.length > 0) {
+                      value = ("Nama sudah ada");
+                      setState(() {
+                        Value = value;
+                      });
+                    } else {
+                      value = ("Nama belum ada");
+                      setState(() {
+                        Value = value;
+                      });
+                    }
+                  },
                   controller: namaController,
                 ),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(top: 20),
-                child: Text("Deskripsi", style: TextStyle(color: Colors.white)),
+                padding: const EdgeInsets.only(top: 20),
+                child: const Text("Deskripsi",
+                    style: TextStyle(color: Colors.white)),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(left: 40, right: 40),
+                padding: const EdgeInsets.only(left: 40, right: 40),
                 child: TextField(
                   controller: deskripsiController,
                 ),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   top: 20,
                 ),
-                child: Text("Komposisi", style: TextStyle(color: Colors.white)),
+                child: const Text("Komposisi",
+                    style: TextStyle(color: Colors.white)),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(left: 40, right: 40),
+                padding: const EdgeInsets.only(left: 40, right: 40),
                 child: TextField(
                   controller: komposisiController,
                 ),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   top: 20,
                 ),
-                child: Text("Manfaat", style: TextStyle(color: Colors.white)),
+                child: const Text("Manfaat",
+                    style: TextStyle(color: Colors.white)),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(left: 40, right: 40),
+                padding: const EdgeInsets.only(left: 40, right: 40),
                 child: TextField(
                   controller: manfaatController,
                 ),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   top: 20,
                 ),
-                child: Text("Dosis", style: TextStyle(color: Colors.white)),
+                child:
+                    const Text("Dosis", style: TextStyle(color: Colors.white)),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(left: 40, right: 40),
+                padding: const EdgeInsets.only(left: 40, right: 40),
                 child: TextField(
                   controller: dosisController,
                 ),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   top: 20,
                 ),
-                child:
-                    Text("Efek Samping", style: TextStyle(color: Colors.white)),
+                child: const Text("Efek Samping",
+                    style: TextStyle(color: Colors.white)),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(left: 40, right: 40),
+                padding: const EdgeInsets.only(left: 40, right: 40),
                 child: TextField(
                   controller: efeksampingController,
                 ),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   top: 20,
                 ),
-                child: Text("Penyajian", style: TextStyle(color: Colors.white)),
+                child: const Text("Penyajian",
+                    style: TextStyle(color: Colors.white)),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(left: 40, right: 40),
+                padding: const EdgeInsets.only(left: 40, right: 40),
                 child: TextField(
                   controller: penyajianController,
                 ),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   top: 20,
                 ),
-                child: Text("Perhatian", style: TextStyle(color: Colors.white)),
+                child: const Text("Perhatian",
+                    style: TextStyle(color: Colors.white)),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(left: 40, right: 40),
+                padding: const EdgeInsets.only(left: 40, right: 40),
                 child: TextField(
                   controller: perhatianController,
                 ),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   top: 20,
                 ),
-                child: Text("Pabrik", style: TextStyle(color: Colors.white)),
+                child:
+                    const Text("Pabrik", style: TextStyle(color: Colors.white)),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(left: 40, right: 40),
+                padding: const EdgeInsets.only(left: 40, right: 40),
                 child: TextField(
                   controller: pabrikController,
                 ),
               ),
               Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.only(top: 40, bottom: 40),
+                  padding: const EdgeInsets.only(top: 40, bottom: 40),
                   child: FloatingActionButton(
                     onPressed: () async {
                       if (namaController.text.isEmpty) {
@@ -330,6 +379,8 @@ class UbahApp3 extends State<UbahApp2> {
                       } else if (link == null) {
                         showAlertDialog1(context);
                         return;
+                      } else if (Value == "Nama sudah ada") {
+                        showAlertDialog2(context);
                       } else {
                         String id =
                             DateTime.now().millisecondsSinceEpoch.toString();
@@ -357,10 +408,11 @@ class UbahApp3 extends State<UbahApp2> {
                           "gambar": link
                         });
                       }
+                      Navigator.pop(context);
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => UtamaApp()));
+                          MaterialPageRoute(builder: (_) => const UtamaApp()));
                     },
-                    child: Icon(Icons.add),
+                    child: const Icon(Icons.add),
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.green,
                   )),

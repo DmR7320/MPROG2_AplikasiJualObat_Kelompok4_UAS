@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:medcurekelompok4uas/menu1.dart';
 import 'package:medcurekelompok4uas/info.dart';
 import 'package:medcurekelompok4uas/menu.dart';
 import 'package:medcurekelompok4uas/menutips.dart';
@@ -9,8 +8,6 @@ import 'package:medcurekelompok4uas/ubah.dart';
 import 'package:medcurekelompok4uas/deskripsi.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:medcurekelompok4uas/ubahupdate.dart';
 
 class UtamaApp extends StatelessWidget {
   const UtamaApp({Key? key}) : super(key: key);
@@ -20,10 +17,10 @@ class UtamaApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            appBarTheme: AppBarTheme(
-          color: const Color(0xFFFFFFFF),
+            appBarTheme: const AppBarTheme(
+          color: Color(0xFFFFFFFF),
         )),
-        home: TampilanApp());
+        home: const TampilanApp());
   }
 }
 
@@ -35,10 +32,10 @@ class TampilanApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            appBarTheme: AppBarTheme(
-          color: const Color(0xFFFFFFFF),
+            appBarTheme: const AppBarTheme(
+          color: Color(0xFFFFFFFF),
         )),
-        home: UtamaApp1(
+        home: const UtamaApp1(
           title: '',
         ));
   }
@@ -64,7 +61,9 @@ class UtamaApp2 extends State<UtamaApp1> {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => MenuApp()));
+          Navigator.pop(context);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (_) => const MenuApp()));
           return Future.value(true);
         },
         child: Scaffold(
@@ -72,22 +71,23 @@ class UtamaApp2 extends State<UtamaApp1> {
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: FloatingActionButton(
             onPressed: () {
+              Navigator.pop(context);
               Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => UbahApp()));
+                  context, MaterialPageRoute(builder: (_) => const UbahApp()));
             },
-            child: Icon(Icons.add),
+            child: const Icon(Icons.add),
             backgroundColor: Colors.green,
             foregroundColor: Colors.white,
           ),
           body: SingleChildScrollView(
               child: Column(children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Container(
-              padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
               child: TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black))),
                 controller: cari,
@@ -107,16 +107,17 @@ class UtamaApp2 extends State<UtamaApp1> {
                 },
               ),
             ),
+            // ignore: avoid_unnecessary_containers
             Container(
                 child: StreamBuilder<QuerySnapshot>(
                     stream: stream,
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (!snapshot.hasData) {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       }
                       return GridView.builder(
-                        padding: EdgeInsets.only(left: 10, right: 10),
+                        padding: const EdgeInsets.only(left: 10, right: 10),
                         primary: false,
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
@@ -131,9 +132,10 @@ class UtamaApp2 extends State<UtamaApp1> {
                           return Container(
                             color: Colors.green,
                             child: Column(children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
+                              // ignore: sized_box_for_whitespace
                               Container(
                                   height: 150,
                                   child: Image.network(
@@ -141,30 +143,31 @@ class UtamaApp2 extends State<UtamaApp1> {
                                   )),
                               Text(
                                 snapshot.data!.docs[index].get('nama'),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 30,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               TextButton(
                                   style: TextButton.styleFrom(
                                       backgroundColor: Colors.white),
                                   onPressed: () {},
-                                  child: Text("Beli",
+                                  child: const Text("Beli",
                                       style: TextStyle(color: Colors.green))),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               TextButton(
                                   style: TextButton.styleFrom(
                                       backgroundColor: Colors.white),
                                   onPressed: () {
+                                    Navigator.pop(context);
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -173,17 +176,18 @@ class UtamaApp2 extends State<UtamaApp1> {
                                                     .data!.docs[index]
                                                     .get('nama'))));
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "Cek Info",
                                     style: TextStyle(color: Colors.green),
                                   )),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               TextButton(
                                   style: TextButton.styleFrom(
                                       backgroundColor: Colors.white),
                                   onPressed: () {
+                                    Navigator.pop(context);
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -192,11 +196,11 @@ class UtamaApp2 extends State<UtamaApp1> {
                                                     .data!.docs[index]
                                                     .get('nama'))));
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "Ubah",
                                     style: TextStyle(color: Colors.green),
                                   )),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               TextButton(
@@ -213,6 +217,7 @@ class UtamaApp2 extends State<UtamaApp1> {
                                         .where('gambar', isEqualTo: urllink)
                                         .get()
                                         .then((value) =>
+                                            // ignore: avoid_function_literals_in_foreach_calls
                                             value.docs.forEach((element) {
                                               FirebaseFirestore.instance
                                                   .collection('barang')
@@ -221,7 +226,7 @@ class UtamaApp2 extends State<UtamaApp1> {
                                                   .then((value) => null);
                                             }));
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "Hapus",
                                     style: TextStyle(color: Colors.green),
                                   )),
@@ -234,42 +239,47 @@ class UtamaApp2 extends State<UtamaApp1> {
           appBar: AppBar(
             toolbarHeight: 100,
             leading: Container(
-                padding: EdgeInsets.only(left: 20),
+                padding: const EdgeInsets.only(left: 20),
                 child: CircleAvatar(
                     backgroundColor: Colors.green,
                     child: IconButton(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       color: Colors.white,
                       onPressed: () {
+                        Navigator.pop(context);
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => MenuApp()));
+                            MaterialPageRoute(builder: (_) => const MenuApp()));
                       },
-                      icon: Icon(Icons.arrow_back),
+                      icon: const Icon(Icons.arrow_back),
                     ))),
             title: Container(
-                padding: EdgeInsets.only(left: 40),
+                padding: const EdgeInsets.only(left: 40),
                 height: 75,
                 child: Image.asset("assets/medcurebanner.png")),
             actions: [
               Container(
-                  padding: EdgeInsets.only(right: 20),
+                  padding: const EdgeInsets.only(right: 20),
                   child: CircleAvatar(
                       backgroundColor: Colors.green,
                       child: IconButton(
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         color: Colors.white,
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => InfoApp()));
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const InfoApp()));
                         },
-                        icon: Icon(Icons.info),
+                        icon: const Icon(Icons.info),
                       )))
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
             onTap: (value) {
+              Navigator.pop(context);
               Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => MenuTips()));
+                  context, MaterialPageRoute(builder: (_) => const MenuTips()));
             },
             backgroundColor: Colors.green,
             selectedItemColor: Colors.white,

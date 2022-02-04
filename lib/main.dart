@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:medcurekelompok4uas/menu.dart';
-import 'package:medcurekelompok4uas/menu1.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -18,10 +17,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            appBarTheme: AppBarTheme(
-          color: const Color(0xFFFFFFFF),
+            appBarTheme: const AppBarTheme(
+          color: Color(0xFFFFFFFF),
         )),
-        home: SplashScreen(
+        home: const SplashScreen(
           title: '',
         ));
   }
@@ -39,8 +38,9 @@ class SplashScreen extends StatefulWidget {
 class SplashScreen1 extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(Duration(seconds: 2), () {
-      Navigator.push(context, MaterialPageRoute(builder: (_) => MenuApp()));
+    Timer(const Duration(seconds: 2), () {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const MenuApp()));
     });
     super.initState();
   }
@@ -49,9 +49,12 @@ class SplashScreen1 extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-          margin: EdgeInsets.only(left: 85, top: 200),
-          width: 200,
-          child: Image.asset("assets/medcurelogo.png")),
+          alignment: Alignment.center,
+          margin: const EdgeInsets.only(top: 50),
+          child: Image.asset(
+            "assets/medcurelogo.png",
+            width: 200,
+          )),
       backgroundColor: Colors.white,
     );
   }

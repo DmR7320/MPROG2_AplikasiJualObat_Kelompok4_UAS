@@ -1,11 +1,8 @@
-import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:medcurekelompok4uas/menu1.dart';
 import 'package:medcurekelompok4uas/utama.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class MenuApp extends StatelessWidget {
   const MenuApp({Key? key}) : super(key: key);
@@ -15,10 +12,10 @@ class MenuApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            appBarTheme: AppBarTheme(
-          color: const Color(0xFFFFFFFF),
+            appBarTheme: const AppBarTheme(
+          color: Color(0xFFFFFFFF),
         )),
-        home: TampilanApp());
+        home: const TampilanApp());
   }
 }
 
@@ -30,10 +27,10 @@ class TampilanApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            appBarTheme: AppBarTheme(
-          color: const Color(0xFFFFFFFF),
+            appBarTheme: const AppBarTheme(
+          color: Color(0xFFFFFFFF),
         )),
-        home: TampilanApp1(
+        home: const TampilanApp1(
           title: '',
         ));
   }
@@ -53,7 +50,7 @@ class TampilanApp2 extends State<TampilanApp1> {
   TextEditingController daftarpasswordController = TextEditingController();
 
   showAlertDialog(BuildContext context) {
-    AlertDialog alert = AlertDialog(
+    AlertDialog alert = const AlertDialog(
       title: Text("Maaf"),
       content: Text("Username / Password anda tidak cocok atau salah."),
     );
@@ -69,11 +66,12 @@ class TampilanApp2 extends State<TampilanApp1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.green[300],
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
             child: Column(children: [
           Container(
-              padding: EdgeInsets.only(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.only(
                 top: 50,
               ),
               child: Image.asset(
@@ -82,27 +80,27 @@ class TampilanApp2 extends State<TampilanApp1> {
                 width: 200,
               )),
           Container(
-            padding: EdgeInsets.only(top: 40, left: 40, right: 40),
-            child: Text("Username"),
+            padding: const EdgeInsets.only(top: 40, left: 40, right: 40),
+            child: const Text("Username"),
           ),
           Container(
-            padding: EdgeInsets.only(left: 40, right: 40, top: 10),
+            padding: const EdgeInsets.only(left: 40, right: 40, top: 10),
             child: TextField(
               controller: daftarusernameController,
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 20, left: 40, right: 40),
-            child: Text("Password"),
+            padding: const EdgeInsets.only(top: 20, left: 40, right: 40),
+            child: const Text("Password"),
           ),
           Container(
-            padding: EdgeInsets.only(left: 40, right: 40, top: 10),
+            padding: const EdgeInsets.only(left: 40, right: 40, top: 10),
             child: TextField(
               controller: daftarpasswordController,
             ),
           ),
           Container(
-              padding: EdgeInsets.only(left: 40, right: 40, top: 40),
+              padding: const EdgeInsets.only(left: 40, right: 40, top: 40),
               child: TextButton(
                   onPressed: () async {
                     String uname = daftarusernameController.text;
@@ -113,39 +111,42 @@ class TampilanApp2 extends State<TampilanApp1> {
                         .where('username', isEqualTo: uname)
                         .where('password', isEqualTo: pword)
                         .get();
-                    var list = result.docs;
-                    print(list);
+                    // ignore: prefer_is_empty
                     if (result.docs.length > 0) {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => UtamaApp()));
+                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const UtamaApp()));
                     } else {
                       showAlertDialog(context);
                     }
                   },
-                  style:
-                      TextButton.styleFrom(backgroundColor: Color(0xFF2E7D32)),
-                  child: Text(
+                  style: TextButton.styleFrom(
+                      backgroundColor: const Color(0xFF2E7D32)),
+                  child: const Text(
                     "Login",
                     style: TextStyle(color: Colors.white),
                   ))),
           Container(
-              padding: EdgeInsets.only(left: 40, right: 40, top: 40),
+              padding: const EdgeInsets.only(left: 40, right: 40, top: 40),
               child: TextButton(
                   onPressed: () {
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MenuApp1()),
+                      MaterialPageRoute(builder: (context) => const MenuApp1()),
                     );
                   },
-                  style:
-                      TextButton.styleFrom(backgroundColor: Color(0xFF1B5E20)),
-                  child: Text(
+                  style: TextButton.styleFrom(
+                      backgroundColor: const Color(0xFF1B5E20)),
+                  child: const Text(
                     "Sign Up ?",
                     style: TextStyle(color: Colors.white),
                   ))),
           Container(
-            padding: EdgeInsets.only(top: 30),
-            child: Text("Login Page"),
+            padding: const EdgeInsets.only(top: 30),
+            child: const Text("Login Page"),
           )
         ])));
   }
